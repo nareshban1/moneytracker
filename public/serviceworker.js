@@ -1,22 +1,27 @@
 const CACHE_NAME = "budget"
-const urlsToCache = ['index.html', 'offline.html'];
+const urlsToCache = ['/static/js/bundle.js', '/static/js/vendors-main.chunk.js', '/static/js/main.chunk.js', '/manifest.json', '/'];
 
 const self = this;
 
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
-            console.log('Opened cache')
             return cache.addAll(urlsToCache);
         })
     )
 });
 self.addEventListener('fetch', (event) => {
-    event.respondWith(
-        caches.match(event.request).then(() => {
-            return fetch(event.request).catch(() => caches.match('offline.html'))
-        })
-    )
+    if (!navigator.onLine) {
+        event.respondWith(
+            caches.match(event.request).then((response) => {
+                if (response) {
+                    return response
+                }
+                let furl = event.request.clone()
+                fetch(furl);
+            })
+        )
+    }
 
 });
 self.addEventListener('activate', (event) => {
