@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "MOney Tracker",
+  "name": "Track your income and expenses",
   "icons": [
     {
       "src": "favicon.ico",

@@ -1,24 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import Balance from "./components/Balance/Balance";
+import Header from "./components/Header/Header";
+import History from "./components/History/History";
+import IncomeExpense from "./components/IncomeExpense/IncomeExpense";
+import TransactionForm from "./components/TransactionForm/TransactionForm";
+import ThemeProvider from "./context/themeProvider";
+import { AppContainer } from "./helpers/CommonStyles";
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider>
+      <AppContainer>
+        <Header />
+        <Balance />
+        <IncomeExpense />
+        <History />
+        <TransactionForm />
+      </AppContainer>
+    </ThemeProvider>
   );
 }
 
