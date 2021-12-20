@@ -27,6 +27,7 @@ border-radius: 3px;
     font-family: 'Poppins';
 
     &:focus{
+        border-radius: 3px;
         outline:1px solid #44BAFF;
         box-shadow: #44BAFF 0px 0px 5px 0px; 
     }
@@ -40,6 +41,13 @@ export const AddButton = styled.button`
     color:white;
     font-family: 'Poppins';
     border-radius: 3px;
+    cursor: pointer;
+    &:hover{
+        opacity: 0.5;
+    }
+
+    
+
 `
 export const FormLabel = styled.label`
     display:flex;
