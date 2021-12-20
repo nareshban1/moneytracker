@@ -1,6 +1,6 @@
 import React from "react";
 import { useAuth } from "../../context/authContext";
-import { firestore } from "../../helpers/Firebase";
+import { firestore } from "../../helpers/firebase";
 import { SigninButton } from "./AuthenticationStyles";
 const Signin = () => {
   const { signInGoogle } = useAuth();
