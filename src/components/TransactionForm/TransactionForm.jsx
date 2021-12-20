@@ -6,6 +6,7 @@ import {
   FormLabel,
   FormOptions,
   FormSelect,
+  SmallInfo,
   TransactionFormContainer,
   TransactionTitle,
 } from "./TransactionFormStyles";
@@ -60,6 +61,7 @@ const TransactionForm = () => {
         </FormLabel>
         <FormLabel htmlFor="transactionAmt">
           Amount
+          <SmallInfo>Use Neagative value for expenses</SmallInfo>
           <FormInput
             type="number"
             name="transactionAmt"

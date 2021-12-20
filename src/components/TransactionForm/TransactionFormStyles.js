@@ -80,3 +80,9 @@ export const FormLabel = styled.label`
     flex-direction: column;
     margin-top:.5rem;
 `
+
+export const SmallInfo = styled.span`
+    color:${(props) => props.theme.textColorPrimary};
+    font-size:0.7rem;
+
+`
