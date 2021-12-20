@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import { ThemeProvider as StyledThemeProvider } from "styled-components";
 import { darkTheme, lightTheme } from "../helpers/theme.js";
 import { GlobalStyles } from "../helpers/globalStyles.js";
 
-export const ThemeContext = React.createContext({
+export const ThemeContext = createContext({
     theme: "",
     toggleTheme: () => { },
 });

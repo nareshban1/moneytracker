@@ -25,12 +25,38 @@ border-radius: 3px;
     border:none;
     box-shadow: rgb(0 0 0 / 15%) 0px 0px 5px 0px; 
     font-family: 'Poppins';
+    color:${(props) => props.theme.textColorPrimary};
 
     &:focus{
         border-radius: 3px;
         outline:1px solid #44BAFF;
         box-shadow: #44BAFF 0px 0px 5px 0px; 
+        color:${(props) => props.theme.textColorPrimary};
     }
+`
+
+export const FormSelect = styled.select`
+padding:0.5rem;
+border-radius: 3px;
+    margin-top:.5rem;
+    background-color:${(props) => props.theme.secondaryBackground};
+    border:none;
+    box-shadow: rgb(0 0 0 / 15%) 0px 0px 5px 0px; 
+    font-family: 'Poppins';
+    color:${(props) => props.theme.textColorPrimary};
+
+    &:focus{
+        border-radius: 3px;
+        outline:1px solid #44BAFF;
+        box-shadow: #44BAFF 0px 0px 5px 0px; 
+        color:${(props) => props.theme.textColorPrimary};
+    }
+
+`
+
+export const FormOptions = styled.option`
+font-family: 'Poppins';
+    color:${(props) => props.theme.textColorPrimary};
 `
 export const AddButton = styled.button`
     padding:0.5rem;

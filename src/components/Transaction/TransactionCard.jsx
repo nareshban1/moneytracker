@@ -5,11 +5,13 @@ import {
   TransactionName,
 } from "./TransactionCardStyles";
 
-const TransactionCard = () => {
+const TransactionCard = ({ transactionName, amount }) => {
   return (
-    <CardContainer borderColor="green">
-      <TransactionName>Payroll</TransactionName>
-      <TransactionAmt>$500</TransactionAmt>
+    <CardContainer borderColor={Math.sign(amount) === 1 ? "green" : "red"}>
+      <TransactionName>{transactionName}</TransactionName>
+      <TransactionAmt>
+        ${Math.sign(amount) === 1 ? amount : amount.substring(1)}
+      </TransactionAmt>
     </CardContainer>
   );
 };

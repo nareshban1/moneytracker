@@ -11,7 +11,7 @@ const ThemeSwitcher = () => {
       <CheckBox
         type="checkbox"
         checked={theme === "dark" ? true : false}
-        onClick={toggleTheme}
+        onChange={toggleTheme}
       />
       <Slider />
     </Switch>
