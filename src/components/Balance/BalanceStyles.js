@@ -5,7 +5,7 @@ font-family:'Poppins',sans-serif;
 text-transform: uppercase;
 font-weight: 500;
 `
-export const BalanceAmount = styled.h2`
+export const BalanceAmount = styled.h1`
 font-family:'Poppins',sans-serif;
 
 `
