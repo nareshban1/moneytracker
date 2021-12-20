@@ -66,7 +66,13 @@ export const TransactionContextProvider = (props) => {
         let isMounted = true;
         const getBalance = () => {
             if (isMounted) {
-                setBalance(transactions?.map(item => item.transaction.amount).reduce((prev, next) => Number(prev) + Number(next)));
+                if (transactions?.length !== 0) {
+                    setBalance(transactions?.map(item => item.transaction.amount).reduce((prev, next) => Number(prev) + Number(next)));
+                }
+                else {
+                    setBalance("000")
+                }
+
             }
 
         }
@@ -80,17 +86,32 @@ export const TransactionContextProvider = (props) => {
         }
 
         const getIncome = () => {
-            let data = transactions?.filter(isIncome)
-            if (isMounted) {
-                setIncome(data?.map(item => item.transaction.amount).reduce((prev, next) => Number(prev) + Number(next)));
+            if (transactions?.length !== 0) {
+                let data = transactions?.filter(isIncome)
+                if (isMounted) {
+                    if (data.length !== 0) {
+                        setIncome(data?.map(item => item.transaction.amount).reduce((prev, next) => Number(prev) + Number(next)));
+                    }
+                }
+            }
+            else {
+                setIncome("000")
             }
         }
 
         const getExpense = () => {
-            let data = transactions?.filter(isExpense)
-            if (isMounted) {
-                setExpense(data?.map(item => item.transaction.amount).reduce((prev, next) => Number(prev) + Number(next)));
+            if (transactions?.length !== 0) {
+                let data = transactions?.filter(isExpense)
+                if (isMounted) {
+                    if (data.length !== 0) {
+                        setExpense(data?.map(item => item.transaction.amount).reduce((prev, next) => Number(prev) + Number(next)));
+                    }
+                }
             }
+            else {
+                setExpense("-000");
+            }
+
         }
 
         if (transactions) {
