@@ -13,7 +13,7 @@ const IncomeExpense = () => {
     <IncomeExpenseContainer>
       <AmtContainer>
         <AmtTitle>Income</AmtTitle>
-        <Amt color="#51ff0d">${income}</Amt>
+        <Amt color="green">${income}</Amt>
       </AmtContainer>
       <AmtContainer>
         <AmtTitle>Expense</AmtTitle>

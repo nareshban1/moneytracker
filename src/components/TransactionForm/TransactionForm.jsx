@@ -66,15 +66,13 @@ const TransactionForm = () => {
       <AddTransactionForm>
         <FormLabel htmlFor="transactionType">
           Transaction Type
-          <TransactionTypeContainer
-            color={type === "income" ? "#51ff0d" : "red"}
-          >
+          <TransactionTypeContainer color={type === "income" ? "green" : "red"}>
             <Switch>
               <CheckBox
                 type="checkbox"
                 checked={type === "income" ? true : false}
                 onChange={handleChange}
-                color={type === "income" ? "#51ff0d" : "red"}
+                color={type === "income" ? "green" : "red"}
               />
               <Slider />
             </Switch>

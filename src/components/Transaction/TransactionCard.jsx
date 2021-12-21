@@ -19,7 +19,7 @@ const TransactionCard = ({ transactionName, amount, type, transactionID }) => {
 
   return (
     <>
-      <CardContainer borderColor={type === "income" ? "#51ff0d" : "red"}>
+      <CardContainer borderColor={type === "income" ? "green" : "red"}>
         <TransactionName>{transactionName}</TransactionName>
         <TransactionAmt>
           {amount}
