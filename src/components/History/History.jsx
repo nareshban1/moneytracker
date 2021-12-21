@@ -16,6 +16,8 @@ const History = () => {
           {transactions?.map(({ id, transaction }) => (
             <TransactionCard
               key={id}
+              transactionID={id}
+              type={transaction.type}
               transactionName={transaction.transactionName}
               amount={transaction.amount}
             />

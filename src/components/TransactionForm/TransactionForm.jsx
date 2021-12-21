@@ -9,6 +9,10 @@ import {
   SmallInfo,
   TransactionFormContainer,
   TransactionTitle,
+  CheckBox,
+  Slider,
+  Switch,
+  TransactionTypeContainer,
 } from "./TransactionFormStyles";
 import { useAuth } from "../../context/authContext";
 import { firestore } from "../../helpers/firebase";
@@ -23,6 +27,8 @@ const TransactionForm = () => {
   const [error, setError] = useState("");
   const [remarks, setRemarks] = useState("");
   const [purpose, setPurpose] = useState("");
+  const [type, setType] = useState("income");
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (amount !== "0" || amount !== "") {
@@ -32,6 +38,7 @@ const TransactionForm = () => {
         amount: amount,
         purpose: purpose,
         remarks: remarks,
+        type: type,
         uid: currentUser.uid,
       });
 
@@ -40,14 +47,40 @@ const TransactionForm = () => {
       setPurpose("");
       setRemarks("");
       setError("");
+      setType("income");
     } else {
       setError("Amount must not be 0");
+    }
+  };
+
+  const handleChange = () => {
+    if (type === "income") {
+      setType("expense");
+    } else {
+      setType("income");
     }
   };
   return (
     <TransactionFormContainer onSubmit={handleSubmit}>
       <TransactionTitle>Add Transaction</TransactionTitle>
       <AddTransactionForm>
+        <FormLabel htmlFor="transactionType">
+          Transaction Type
+          <TransactionTypeContainer
+            color={type === "income" ? "#51ff0d" : "red"}
+          >
+            <Switch>
+              <CheckBox
+                type="checkbox"
+                checked={type === "income" ? true : false}
+                onChange={handleChange}
+                color={type === "income" ? "#51ff0d" : "red"}
+              />
+              <Slider />
+            </Switch>
+            {type}
+          </TransactionTypeContainer>
+        </FormLabel>
         <FormLabel htmlFor="transactionName">
           Transaction Name
           <FormInput
@@ -61,7 +94,6 @@ const TransactionForm = () => {
         </FormLabel>
         <FormLabel htmlFor="transactionAmt">
           Amount
-          <SmallInfo>Use Neagative value for expenses</SmallInfo>
           <FormInput
             type="number"
             name="transactionAmt"
@@ -81,10 +113,12 @@ const TransactionForm = () => {
             value={purpose}
             onChange={(e) => setPurpose(e.target.value)}
           >
+            <FormOptions value="Bill Sharing">Income/Salary</FormOptions>
             <FormOptions value="Bill Sharing">Bill Sharing</FormOptions>
             <FormOptions value="Family Expenses">Family Expenses</FormOptions>
             <FormOptions value="Lend/Borrow">Lend/Borrow</FormOptions>
             <FormOptions value="Personal Use">Personal Use</FormOptions>
+            <FormOptions value="Others">Others</FormOptions>
           </FormSelect>
         </FormLabel>
         <FormLabel htmlFor="transactionAmt">

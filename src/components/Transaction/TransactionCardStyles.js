@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
 
+export const DeleteIcon = styled.div`
+    display: none;
+`
+
 export const CardContainer = styled.div`
 display: flex;
 width: 100%;
@@ -12,10 +16,27 @@ padding:.5rem;
 border-radius: 5px;
 margin-top: 1rem;
 font-size: 0.9rem;
-border-right:3px solid ${(props) => props.borderColor}
+border-right:3px solid ${(props) => props.borderColor};
+
+&:hover{
+    ${DeleteIcon}{
+        display:flex;
+        align-items:center;
+        margin-left:10px;
+        transition:0.1s ease;
+
+
+        &:hover{
+            color:Red;
+        }
+    }
+}
 `
 
 export const TransactionName = styled.p`
 
 `
-export const TransactionAmt = styled.p``
+export const TransactionAmt = styled.p`
+    display:flex;
+`
+

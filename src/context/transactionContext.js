@@ -18,41 +18,30 @@ export const TransactionContextProvider = (props) => {
     const [expense, setExpense] = useState("");
 
 
-
-
-
-
-    const value = {
-        transactions,
-        loading,
-        balance,
-        income,
-        expense
-
-    }
+    const getUserTransactions = async (isMounted) => {
+        setLoading(true);
+        await firestore
+            .collection("transactions")
+            .where("uid", "==", `${currentUser.uid}`)
+            .orderBy("timestamp", "desc")
+            .onSnapshot((snapshot) => {
+                if (isMounted) {
+                    setTransactions(
+                        snapshot.docs.map((doc) => ({
+                            id: doc.id,
+                            transaction: doc.data(),
+                        }))
+                    );
+                }
+            });
+        setLoading(false);
+    };
 
     useEffect(() => {
         let isMounted = true;
-        const getUserTransactions = async () => {
-            setLoading(true);
-            await firestore
-                .collection("transactions")
-                .where("uid", "==", `${currentUser.uid}`)
-                .orderBy("timestamp", "desc")
-                .onSnapshot((snapshot) => {
-                    if (isMounted) {
-                        setTransactions(
-                            snapshot.docs.map((doc) => ({
-                                id: doc.id,
-                                transaction: doc.data(),
-                            }))
-                        );
-                    }
-                });
-            setLoading(false);
-        };
+
         if (currentUser) {
-            getUserTransactions();
+            getUserTransactions(isMounted);
         }
 
         return () => {
@@ -64,33 +53,27 @@ export const TransactionContextProvider = (props) => {
 
     useEffect(() => {
         let isMounted = true;
-        const getBalance = () => {
-            if (isMounted) {
-                if (transactions?.length !== 0) {
-                    setBalance(transactions?.map(item => item.transaction.amount).reduce((prev, next) => Number(prev) + Number(next)));
-                }
-                else {
-                    setBalance("000")
-                }
 
-            }
-
-        }
 
         function isIncome(value) {
-            return Math.sign(value.transaction.amount) === 1
+            return value.transaction.type === "income"
         }
 
         function isExpense(value) {
-            return Math.sign(value.transaction.amount) === -1
+            return value.transaction.type === "expense"
         }
 
         const getIncome = () => {
+            console.log("transaction changed")
             if (transactions?.length !== 0) {
                 let data = transactions?.filter(isIncome)
+
                 if (isMounted) {
                     if (data.length !== 0) {
                         setIncome(data?.map(item => item.transaction.amount).reduce((prev, next) => Number(prev) + Number(next)));
+                    }
+                    else {
+                        setIncome("000")
                     }
                 }
             }
@@ -102,28 +85,75 @@ export const TransactionContextProvider = (props) => {
         const getExpense = () => {
             if (transactions?.length !== 0) {
                 let data = transactions?.filter(isExpense)
+
                 if (isMounted) {
                     if (data.length !== 0) {
                         setExpense(data?.map(item => item.transaction.amount).reduce((prev, next) => Number(prev) + Number(next)));
                     }
+                    else {
+                        setExpense("000");
+                    }
                 }
             }
             else {
-                setExpense("-000");
+                setExpense("000");
             }
+        }
 
+        const getBalance = () => {
+            if (isMounted) {
+                if (transactions?.length !== 0) {
+                    setBalance(Number(income) - Number(expense));
+                }
+                else {
+                    setBalance("000")
+                }
+            }
         }
 
         if (transactions) {
-            getBalance();
+
             getIncome();
             getExpense();
+            getBalance();
         }
 
         return () => {
             isMounted = false;
         };
     }, [transactions]);
+
+    useEffect(() => {
+        let isMounted = true;
+        const getBalance = () => {
+            if (isMounted) {
+                if (transactions?.length !== 0) {
+                    setBalance(Number(income) - Number(expense));
+                }
+                else {
+                    setBalance("000")
+                }
+            }
+        }
+
+        if (transactions) {
+            getBalance();
+        }
+
+        return () => {
+            isMounted = false;
+        };
+    }, [transactions, income, expense]);
+
+    const value = {
+        transactions,
+        loading,
+        balance,
+        income,
+        expense,
+        getUserTransactions
+
+    }
 
     return (
         <TransactionContext.Provider value={value}>

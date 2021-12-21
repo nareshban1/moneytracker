@@ -13,11 +13,11 @@ const IncomeExpense = () => {
     <IncomeExpenseContainer>
       <AmtContainer>
         <AmtTitle>Income</AmtTitle>
-        <Amt color="green">${income}</Amt>
+        <Amt color="#51ff0d">${income}</Amt>
       </AmtContainer>
       <AmtContainer>
         <AmtTitle>Expense</AmtTitle>
-        <Amt color="red">${expense?.toString().substring(1)}</Amt>
+        <Amt color="red">${expense}</Amt>
       </AmtContainer>
     </IncomeExpenseContainer>
   );
