@@ -1,5 +1,15 @@
 const CACHE_NAME = "budget"
-const urlsToCache = ['/static/js/bundle.js', '/static/js/vendors-main.chunk.js', '/static/js/main.chunk.js', '/manifest.json', '/'];
+const urlsToCache = ['/static/js/bundle.js',
+    '/static/js/vendors-main.chunk.js',
+    '/static/js/main.chunk.js',
+    '/manifest.json',
+    '/logo512.png',
+    '/logo192.png',
+    '/favicon.ico',
+    '/default.png',
+    '/',
+    '/fonts.gstatic.com/',
+    '/fonts.googleapis.com/'];
 
 const self = this;
 

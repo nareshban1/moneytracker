@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth, provider } from "../helpers/firebase"
-
+import { setPersistence, browserSessionPersistence } from "firebase/auth";
 export const UserContext = createContext();
 
 export const useAuth = () => {
@@ -12,7 +12,14 @@ export const UserContextProvider = (props) => {
 
 
     const signInGoogle = async () => {
-        return await auth.signInWithPopup(provider);
+        await setPersistence(auth, browserSessionPersistence)
+            .then(() => {
+                return auth.signInWithPopup(provider);
+            })
+            .catch((error) => {
+                console.log(error.message)
+            });
+
 
     }
 

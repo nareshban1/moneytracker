@@ -21,5 +21,15 @@ export const firestore = app.firestore();
 export const database = firebase.database();
 export const storage = firebase.storage();
 
+firestore.enablePersistence().catch(err => {
+    if (err.code === 'failed-precondition') {
+        console.log('persistence failed');
+    }
+    else if (err.code === 'umimplemented') {
+        console.log('not avaialble');
+    }
+})
+
+
 
 export default app

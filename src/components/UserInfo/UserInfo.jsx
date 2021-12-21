@@ -14,7 +14,13 @@ const UserInfo = () => {
   return (
     <UserHeader>
       <UserProfileContainer>
-        <UserImage src={currentUser?.photoURL} />
+        <UserImage
+          src={currentUser?.photoURL}
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = process.env.PUBLIC_URL + "/default.png";
+          }}
+        />
         <UserName>{currentUser?.displayName}</UserName>
       </UserProfileContainer>
       <Logout />
