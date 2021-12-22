@@ -7,6 +7,8 @@ import {
   EditIcon,
 } from "./TransactionCardStyles";
 
+import { AnimatePresence } from "framer-motion";
+
 import { ImCross, ImPencil } from "react-icons/im";
 import DeleteModal from "../DeleteModal/DeleteModal";
 import { disableBodyScroll } from "body-scroll-lock";
@@ -41,21 +43,19 @@ const TransactionCard = ({ transaction, transactionID }) => {
           </DeleteIcon>
         </TransactionAmt>
       </CardContainer>
-      {viewModal && (
-        <DeleteModal
-          viewModal={viewModal}
-          setViewModal={setViewModal}
-          docid={transactionID}
-        />
-      )}
 
-      {viewEditModal && (
-        <EditModal
-          setViewEditModal={setViewEditModal}
-          docid={transactionID}
-          transaction={transaction}
-        />
-      )}
+      <DeleteModal
+        viewModal={viewModal}
+        setViewModal={setViewModal}
+        docid={transactionID}
+      />
+
+      <EditModal
+        setViewEditModal={setViewEditModal}
+        docid={transactionID}
+        transaction={transaction}
+        viewEditModal={viewEditModal}
+      />
     </>
   );
 };

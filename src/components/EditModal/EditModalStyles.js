@@ -1,8 +1,8 @@
 import styled from "styled-components";
-
+import { AnimatePresence, motion } from "framer-motion";
 
 //same as the delete modal , literally 
-export const EditModalContainer = styled.div`
+export const EditModalContainer = styled(motion.div)`
     background-color: rgba(0,0,0,0.6);
     position: fixed;
     top:0;
@@ -15,7 +15,7 @@ export const EditModalContainer = styled.div`
 
 `
 
-export const EditModalCard = styled.div`
+export const EditModalCard = styled(motion.div)`
     background-color: ${(props) => props.theme.mainBackground};
     color:${(props) => props.theme.textColorPrimary};
     padding:1rem;

@@ -27,8 +27,9 @@ import {
   Switch,
   TransactionTypeContainer,
 } from "../TransactionForm/TransactionFormStyles";
-const EditModal = ({ setViewEditModal, transaction, docid }) => {
-  const { getUserTransactions } = useTransactions();
+import { AnimatePresence } from "framer-motion";
+
+const EditModal = ({ viewEditModal, setViewEditModal, transaction, docid }) => {
   const [transactionName, setTransactionName] = useState(
     transaction.transactionName
   );
@@ -48,7 +49,6 @@ const EditModal = ({ setViewEditModal, transaction, docid }) => {
         remarks: remarks,
         type: type,
       });
-      clearAllBodyScrollLocks();
       setViewEditModal(false);
     } else {
       setError("Amount must not be 0");
@@ -56,7 +56,6 @@ const EditModal = ({ setViewEditModal, transaction, docid }) => {
   };
 
   const closeModal = () => {
-    clearAllBodyScrollLocks();
     setViewEditModal(false);
   };
 
@@ -67,93 +66,120 @@ const EditModal = ({ setViewEditModal, transaction, docid }) => {
       setType("income");
     }
   };
+
+  const backdrop = {
+    visible: { opacity: 1 },
+    hidden: { opacity: 0, transition: { delay: 0.5 } },
+  };
+
+  const card = {
+    hidden: {
+      y: "-100vh",
+      opacity: 0,
+    },
+    visible: {
+      y: "0",
+      opacity: 1,
+    },
+  };
   return (
-    <EditModalContainer>
-      <EditModalCard>
-        <Header>
-          <Title>Edit Transaction</Title>
-          <CloseButton onClick={closeModal}>
-            <ImCross />
-          </CloseButton>
-        </Header>
-        <TransactionFormContainer onSubmit={updateTransaction}>
-          <AddTransactionForm>
-            <FormLabel htmlFor="transactionType">
-              Transaction Type
-              <TransactionTypeContainer
-                color={type === "income" ? "green" : "red"}
-              >
-                <Switch>
-                  <CheckBox
-                    type="checkbox"
-                    checked={type === "income" ? true : false}
-                    onChange={handleChange}
+    <AnimatePresence exitBeforeEnter onExitComplete={clearAllBodyScrollLocks}>
+      {viewEditModal && (
+        <EditModalContainer
+          variants={backdrop}
+          initial="hidden"
+          animate="visible"
+          exit="hidden"
+        >
+          <EditModalCard variants={card}>
+            <Header>
+              <Title>Edit Transaction</Title>
+              <CloseButton onClick={closeModal}>
+                <ImCross />
+              </CloseButton>
+            </Header>
+            <TransactionFormContainer onSubmit={updateTransaction}>
+              <AddTransactionForm>
+                <FormLabel htmlFor="transactionType">
+                  Transaction Type
+                  <TransactionTypeContainer
                     color={type === "income" ? "green" : "red"}
+                  >
+                    <Switch>
+                      <CheckBox
+                        type="checkbox"
+                        checked={type === "income" ? true : false}
+                        onChange={handleChange}
+                        color={type === "income" ? "green" : "red"}
+                      />
+                      <Slider />
+                    </Switch>
+                    {type}
+                  </TransactionTypeContainer>
+                </FormLabel>
+                <FormLabel htmlFor="transactionName">
+                  Transaction Name
+                  <FormInput
+                    type="text"
+                    name="transactionName"
+                    placeholder="Enter Transaction Name"
+                    required
+                    value={transactionName}
+                    onChange={(e) => setTransactionName(e.target.value)}
                   />
-                  <Slider />
-                </Switch>
-                {type}
-              </TransactionTypeContainer>
-            </FormLabel>
-            <FormLabel htmlFor="transactionName">
-              Transaction Name
-              <FormInput
-                type="text"
-                name="transactionName"
-                placeholder="Enter Transaction Name"
-                required
-                value={transactionName}
-                onChange={(e) => setTransactionName(e.target.value)}
-              />
-            </FormLabel>
-            <FormLabel htmlFor="transactionAmt">
-              Amount
-              <FormInput
-                type="number"
-                name="transactionAmt"
-                placeholder="Enter Transaction Anount"
-                required
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-              />
-            </FormLabel>
-            {error.length !== 0 && error}
-            <FormLabel htmlFor="transactionAmt">
-              Purpose
-              <FormSelect
-                type="select"
-                name="purpose"
-                required
-                value={purpose}
-                onChange={(e) => setPurpose(e.target.value)}
-              >
-                <FormOptions value="Bill Sharing">Income/Salary</FormOptions>
-                <FormOptions value="Bill Sharing">Bill Sharing</FormOptions>
-                <FormOptions value="Family Expenses">
-                  Family Expenses
-                </FormOptions>
-                <FormOptions value="Lend/Borrow">Lend/Borrow</FormOptions>
-                <FormOptions value="Personal Use">Personal Use</FormOptions>
-                <FormOptions value="Others">Others</FormOptions>
-              </FormSelect>
-            </FormLabel>
-            <FormLabel htmlFor="transactionAmt">
-              Remarks
-              <FormInput
-                type="text"
-                name="remarks"
-                placeholder="Remarks"
-                required
-                value={remarks}
-                onChange={(e) => setRemarks(e.target.value)}
-              />
-            </FormLabel>
-            {error.length !== 0 && error}
-            <EditButton>Update</EditButton>
-          </AddTransactionForm>
-        </TransactionFormContainer>
-      </EditModalCard>
-    </EditModalContainer>
+                </FormLabel>
+                <FormLabel htmlFor="transactionAmt">
+                  Amount
+                  <FormInput
+                    type="number"
+                    name="transactionAmt"
+                    placeholder="Enter Transaction Anount"
+                    required
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                  />
+                </FormLabel>
+                {error.length !== 0 && error}
+                <FormLabel htmlFor="transactionAmt">
+                  Purpose
+                  <FormSelect
+                    type="select"
+                    name="purpose"
+                    required
+                    value={purpose}
+                    onChange={(e) => setPurpose(e.target.value)}
+                  >
+                    <FormOptions value="Bill Sharing">
+                      Income/Salary
+                    </FormOptions>
+                    <FormOptions value="Bill Sharing">Bill Sharing</FormOptions>
+                    <FormOptions value="Family Expenses">
+                      Family Expenses
+                    </FormOptions>
+                    <FormOptions value="Lend/Borrow">Lend/Borrow</FormOptions>
+                    <FormOptions value="Personal Use">Personal Use</FormOptions>
+                    <FormOptions value="Others">Others</FormOptions>
+                  </FormSelect>
+                </FormLabel>
+                <FormLabel htmlFor="transactionAmt">
+                  Remarks
+                  <FormInput
+                    type="text"
+                    name="remarks"
+                    placeholder="Remarks"
+                    required
+                    value={remarks}
+                    onChange={(e) => setRemarks(e.target.value)}
+                  />
+                </FormLabel>
+                {error.length !== 0 && error}
+                <EditButton>Update</EditButton>
+              </AddTransactionForm>
+            </TransactionFormContainer>
+          </EditModalCard>
+        </EditModalContainer>
+      )}
+    </AnimatePresence>
   );
 };
 

@@ -1,6 +1,6 @@
 import styled from "styled-components";
-
-export const DeleteModalContainer = styled.div`
+import { AnimatePresence, motion } from "framer-motion";
+export const DeleteModalContainer = styled(motion.div)`
     background-color: rgba(0,0,0,0.6);
     position: fixed;
     top:0;
@@ -13,7 +13,7 @@ export const DeleteModalContainer = styled.div`
 
 `
 
-export const DeleteModalCard = styled.div`
+export const DeleteModalCard = styled(motion.div)`
     background-color: ${(props) => props.theme.mainBackground};
     color:${(props) => props.theme.textColorPrimary};
     padding:1rem;
