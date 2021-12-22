@@ -9,7 +9,7 @@ const urlsToCache = ['/static/js/bundle.js',
     '/default.png',
     '/',
     '/fonts.gstatic.com/',
-    '/fonts.googleapis.com/'];
+    '/fonts.googleapis.com/',];
 
 const self = this;
 
@@ -24,11 +24,11 @@ self.addEventListener('fetch', (event) => {
     if (!navigator.onLine) {
         event.respondWith(
             caches.match(event.request).then((response) => {
-                if (response) {
+                return response || fetch(event.request).then((response) => {
+                    caches.put(event.request, response.clone());
                     return response
-                }
-                let furl = event.request.clone()
-                fetch(furl);
+                })
+
             })
         )
     }
