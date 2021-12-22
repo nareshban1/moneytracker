@@ -18,6 +18,7 @@ const DeleteModal = ({ viewModal, setViewModal, docid }) => {
   const deleteTransaction = () => {
     firestore.collection("transactions").doc(docid).delete();
     getUserTransactions();
+    setViewModal(false);
     clearAllBodyScrollLocks();
   };
 

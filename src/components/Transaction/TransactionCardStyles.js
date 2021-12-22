@@ -5,6 +5,10 @@ export const DeleteIcon = styled.div`
     display: none;
 `
 
+export const EditIcon = styled.div`
+    display: none;
+`
+
 export const CardContainer = styled.div`
 display: flex;
 width: 100%;
@@ -28,6 +32,18 @@ border-right:3px solid ${(props) => props.borderColor};
 
         &:hover{
             color:Red;
+        }
+    }
+
+    ${EditIcon}{
+        display:flex;
+        align-items:center;
+        margin-left:10px;
+        transition:0.1s ease;
+
+
+        &:hover{
+            color:yellow;
         }
     }
 }

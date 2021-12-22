@@ -17,9 +17,7 @@ const History = () => {
             <TransactionCard
               key={id}
               transactionID={id}
-              type={transaction.type}
-              transactionName={transaction.transactionName}
-              amount={transaction.amount}
+              transaction={transaction}
             />
           ))}
         </>
